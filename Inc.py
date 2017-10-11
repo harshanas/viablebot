@@ -1,0 +1,11 @@
+import Messenger
+import WitAI
+import Response
+
+
+
+
+messenger = Messenger.Messenger("EAABmEoReDRoBAOzfYXpGqNmlged3qRpBoVUZA0HkvGJfS0e7aWZCREAhQsT0CjHOwTV9Kq7winkTZCwQNmlb7RXs55oZBzafZAvD5hviecO66WuBgmZAbuxSAxZBv98enxRVXuBSsqkLELSwzwSmDA9BKYZCZC0AGCdMseoufHNHZBRlFFAVr0Cnst")
+witai = WitAI.WitAI("PS6EKRIBWTKEMZOI3GDEUSVMC2QFJXE4")
+response = Response.Response()
+
