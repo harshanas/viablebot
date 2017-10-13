@@ -14,20 +14,42 @@ class Response:
         if "greetings" in witai_req_entities and witai_req_entities['greetings'][0]['confidence'] > 0.9:
 
             if Inc.database.is_user_exist(sender_id=data[1]):
-                Inc.messenger.send_message(data[1], {"text": "Hey Harshana!"})
+                Inc.messenger.send_message(data[1], {"text": "Hey "+user_data['first_name']+"!\n What do you like to find today?"})
             else:
                 Inc.database.add_user(user_data['id'])
-                Inc.messenger.send_message(data[1], {"text": "Hey "+user_data['first_name']+",\nI'm Grillo. What's up?"})
+                Inc.messenger.send_message(data[1], {"text": "Hey "+user_data['first_name']+",\nHi, Harshana! I'm Viable. I can give the best places around you to buy  any sustainable alternative ."})
 
         elif "bye" in witai_req_entities:
             Inc.messenger.send_message(data[1], {"text": "Bye!"})
-        elif "get_score" in witai_req_entities:
-            Inc.messenger.send_message(data[1], {"text": "You said get score"})
-        elif "teams" in witai_req_entities:
-            Inc.messenger.send_message(data[1], {"text": "You said teams!"})
+        elif "alternatives" in witai_req_entities:
+            Inc.messenger.send_message(data[1], {"text": "Can I get your location please?","quick_replies":[{
+                "content_type":"location"}]})
+        elif "items" in witai_req_entities:
+            Inc.messenger.send_message(data[1], {"text": "You said items!"})
 
     def respond_to_payload(self, data):
-        splitted_payload = data[2].split("_")
+        print(data[2])
 
-        if splitted_payload[0] == "RateStore":
-            print('Rates the store')
+    def respond_to_location(self,data):
+        stores = Inc.database.get_store(str(data[2]['lat']), str(data[2]['long']))
+        print(stores)
+        store_count = 0
+
+        elements = []
+        for store in stores:
+
+            store_element = {"title": store[1],
+                             "subtitle": store[3],
+                             "buttons": [
+                                 {
+                                     "type": "web_url",
+                                     "url": "https://petersfancybrownhats.com",
+                                     "title": "View Google Maps"
+                                 }, {
+                                     "type": "postback",
+                                     "title": "Rate this",
+                                     "payload": "DEVELOPER_DEFINED_PAYLOAD"}]
+                             }
+            elements.append(store_element)
+        payload = {"attachment": {"type": "template", "payload": {"template_type": "generic", "elements": elements}}}
+        Inc.messenger.send_message(data[1], payload)

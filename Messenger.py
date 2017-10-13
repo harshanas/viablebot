@@ -19,9 +19,19 @@ class Messenger:
             if 'text' in message_data:
                 return ['text', sender_id, message_data['text']]
 
+            elif "attachments" in message_data:
+                attachments = message_data['attachments'][0]
+                if 'payload' in attachments:
+                    payload = attachments['payload']
+                    if 'coordinates' in payload:
+                        coordinates = payload['coordinates']
+                        return ['coordinates', sender_id, coordinates]
+
         elif 'postback' in channel_data:
             message_data = channel_data['postback']
             return['payload', sender_id, message_data['payload']]
+
+
 
     def send_message(self, sender_id, message):
         message_obj = {"recipient": {"id": sender_id}, "message": message}

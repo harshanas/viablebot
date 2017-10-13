@@ -24,5 +24,5 @@ class Handler:
             # send it to witai, get result, return it, send it to response module
             witai_request = Inc.witai.understand(data[2])
             return witai_request
-        elif data[0] == "payload":
-            return ""
+        elif data[0] == "coordinates":
+            Inc.response.respond_to_location(data)

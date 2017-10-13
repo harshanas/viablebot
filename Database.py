@@ -13,8 +13,7 @@ class Database:
     def add_user(self, sender_id):
         with self.con:
             cur = self.con.cursor()
-            cur.execute("INSERT INTO user_table(Sender_ID) VALUES(%s)",
-                        sender_id)
+            cur.execute("INSERT INTO user_table(sender_id) VALUES ("+sender_id+")")
 
     def is_user_exist(self, sender_id):
         with self.con:
@@ -26,15 +25,16 @@ class Database:
         else:
             return False
 
-    def get_store(self, lat,lng):
+    def get_store(self, lat, lng):
         with self.con:
             cur = self.con.cursor()
-            cur.execute("SELECT * FROM store_table WHERE lat = "+lat+"AND lng="+lng)
+            cur.execute("SELECT * FROM store_table WHERE lat = "+lat+" AND lng="+lng)
             rows = cur.fetchall()
         if len(rows) > 0:
             return rows
         else:
             return False
+
 
 
 
