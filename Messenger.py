@@ -23,9 +23,6 @@ class Messenger:
             message_data = channel_data['postback']
             return['payload', sender_id, message_data['payload']]
 
-
-
-
     def send_message(self, sender_id, message):
         message_obj = {"recipient": {"id": sender_id}, "message": message}
         request = requests.post(self.message_url, json=message_obj)
@@ -37,5 +34,3 @@ class Messenger:
         request = requests.get(url)
         return request.json()
 
-#messenger = Messenger("EAABwnDx3fvQBAJN1uGNKK7KVyNKPTZCblYHFl2Q3ZAR3XarbFPS44ruxgAMbUdg97Ve6B3ddBlcDuHikOoFPi9qOlMlM3y92ZB8wVDRZCckn6znlJR2sY9TX0PSmYEsHo9Cla09rwmWBTUMhdGRoErCRPqzfZCCwTZCpIwLTXdcMiLXHP12Ivg")
-#print(messenger.get_user_profile("1282168675226359"))

@@ -16,22 +16,8 @@ class Response:
             if Inc.database.is_user_exist(sender_id=data[1]):
                 Inc.messenger.send_message(data[1], {"text": "Hey Harshana!"})
             else:
-                Inc.database.add_user(user_data['id'],
-                                     user_data['first_name'], user_data['last_name'],
-                                     user_data['locale'], user_data['timezone'], user_data['gender'])
+                Inc.database.add_user(user_data['id'])
                 Inc.messenger.send_message(data[1], {"text": "Hey "+user_data['first_name']+",\nI'm Grillo. What's up?"})
-
-            nearby_matches = Inc.grillo.find_nearby_matches()
-            if len(nearby_matches) >= 1:
-                message = {"attachment":{"type":"template","payload":{"template_type":"generic","elements":[]}}}
-                Inc.messenger.send_message(data[1], {"text": "There are several matches coming up"})
-                for match in nearby_matches:
-                    match_name = match['team-1']+" vs "+match['team-2']
-                    element = {"title":match_name,
-                               "subtitle":"Date: "+match['date'].split("T")[0],
-                               "buttons":[{"type":"postback","title":"Get Alerts","payload":"GetAlerts_"+str(match['unique_id'])}]}
-                    message['attachment']['payload']['elements'].append(element)
-                Inc.messenger.send_message(data[1], message)
 
         elif "bye" in witai_req_entities:
             Inc.messenger.send_message(data[1], {"text": "Bye!"})
@@ -43,9 +29,5 @@ class Response:
     def respond_to_payload(self, data):
         splitted_payload = data[2].split("_")
 
-        if splitted_payload[0] == "GetAlerts":
-            match_details = Inc.grillo.get_match_details(splitted_payload[1])
-            if Inc.database.add_match(data[1],{"unique_id":splitted_payload[1], "date":match_details['date'].split("T")[0]}):
-                Inc.messenger.send_message(data[1], {"text":"Added"})
-            else:
-                Inc.messenger.send_message(data[1], {"text": "Already Added"})
+        if splitted_payload[0] == "RateStore":
+            print('Rates the store')

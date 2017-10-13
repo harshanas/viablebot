@@ -10,9 +10,8 @@ class Handler:
         if 'channelId' in json_request:
             if json_request['channelId'] == "facebook":
                 data = Inc.messenger.recieve_message(json_request)
-                Inc.messenger.send_message(data[1], {"text": "Hello"})
-                # handled_message = self.handle_messages(data)
-                # Inc.response.respond(data, handled_message)
+                handled_message = self.handle_messages(data)
+                Inc.response.respond(data, handled_message)
 
         return "", 200
 
