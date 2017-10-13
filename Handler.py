@@ -25,4 +25,6 @@ class Handler:
             witai_request = Inc.witai.understand(data[2])
             return witai_request
         elif data[0] == "coordinates":
-            Inc.response.respond_to_location(data)
+            Inc.response.respond_to_location(datsa)
+        elif data[0] == "payload":
+            Inc.response.respond_to_payload(data)

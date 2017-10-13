@@ -28,7 +28,33 @@ class Response:
             Inc.messenger.send_message(data[1], {"text": "You said items!"})
 
     def respond_to_payload(self, data):
-        print(data[2])
+        Inc.messenger.send_message(data[1], {"text":"Out of 5 how many stars you like to give?","quick_replies":[
+      {
+        "content_type":"text",
+        "title":"⭐⭐⭐⭐⭐",
+        "payload":"FIVERATE"
+      },
+            {
+                "content_type": "text",
+                "title": "⭐⭐⭐⭐",
+                "payload": "FOURRATE"
+            },
+            {
+                "content_type": "text",
+                "title": "⭐⭐⭐",
+                "payload": "THREERATE"
+            },
+            {
+                "content_type": "text",
+                "title": "⭐⭐",
+                "payload": "TWORATE"
+            },
+            {
+                "content_type": "text",
+                "title": "⭐",
+                "payload": "ONERATE"
+            }
+    ]})
 
     def respond_to_location(self,data):
         stores = Inc.database.get_store(str(data[2]['lat']), str(data[2]['long']))
